@@ -1,0 +1,21 @@
+<%+header%>
+
+<div class="cbi-map">
+    <h2>PeDitXai - Chat with DeepSeek</h2>
+    <div class="cbi-section">
+        <div id="chat-container" class="chat-container">
+            <div id="chat-history" class="chat-history">
+                <!-- Chat messages will be dynamically added here -->
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-message" placeholder="Type your message here..." class="chat-input" />
+                <button id="send-button" class="chat-send-button">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="<%=resource%>/peditxai/chat.js"></script>
+<link rel="stylesheet" href="<%=media%>/css/peditxai.css" />
+
+<%+footer%>
