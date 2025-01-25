@@ -19,10 +19,18 @@ jobs:
           "brcm47xx", "ipq40xx", "ipq806x", "lantiq"
         ]
     steps:
+    - name: Extract Owner and Repo from URL
+      id: extract_repo
+      run: |
+        REPO_URL="${{ github.event.inputs.repo_url }}"
+        OWNER_REPO=$(echo $REPO_URL | sed -E 's#https://github.com/([^/]+)/([^/]+).*#\1/\2#')
+        echo "Extracted owner/repo: $OWNER_REPO"
+        echo "::set-output name=owner_repo::$OWNER_REPO"
+
     - name: Checkout Repository
       uses: actions/checkout@v3
       with:
-        repository: ${{ github.event.inputs.repo_url }}
+        repository: ${{ steps.extract_repo.outputs.owner_repo }}
         path: source
 
     - name: Set up Python and Build Environment
