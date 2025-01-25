@@ -1,0 +1,116 @@
+/* General Styles */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chat-history {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.chat-message {
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    max-width: 70%;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.chat-message.user {
+    background-color: #007bff;
+    color: #ffffff;
+    align-self: flex-end;
+}
+
+.chat-message.assistant {
+    background-color: #f1f1f1;
+    color: #333333;
+    align-self: flex-start;
+}
+
+.chat-message.error {
+    background-color: #ffebee;
+    color: #d32f2f;
+    align-self: center;
+}
+
+.chat-message::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    border-width: 10px;
+    border-style: solid;
+}
+
+.chat-message.user::after {
+    right: 10px;
+    border-color: transparent transparent transparent #007bff;
+}
+
+.chat-message.assistant::after {
+    left: 10px;
+    border-color: transparent #f1f1f1 transparent transparent;
+}
+
+.chat-input-container {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.chat-input:focus {
+    border-color: #007bff;
+}
+
+.chat-send-button {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-send-button:hover {
+    background-color: #0056b3;
+}
+
+.execute-button {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.execute-button:hover {
+    background-color: #218838;
+}
