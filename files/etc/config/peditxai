@@ -1,0 +1,2 @@
+config peditxai 'settings'
+    option api_key ''
