@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=15
+
+start() {
+    echo "Starting PeDitXai..."
+    # Add any startup commands here
+}
+
+stop() {
+    echo "Stopping PeDitXai..."
+    # Add any cleanup commands here
+}
+
+restart() {
+    stop
+    start
+}
