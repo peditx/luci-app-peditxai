@@ -1,0 +1,56 @@
+name: OpenWrt IPK Package Builder with SDK and Matrix
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: 'GitHub Repository URL'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [
+          "x86_64", "ar71xx", "mips", "mipsel", "armvirt", "arm_cortex-a7", "arm_cortex-a9",
+          "arm_cortex-a53", "arm_cortex-a72", "mvebu", "ath79", "ramips", "sunxi", "brcm63xx",
+          "brcm47xx", "ipq40xx", "ipq806x", "lantiq"
+        ]
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ github.event.inputs.repo_url }}
+        path: source
+
+    - name: Set up Python and Build Environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python3 python3-venv
+
+    - name: Download OpenWrt SDK
+      run: |
+        SDK_URL="https://downloads.openwrt.org/releases/22.03.5/targets/${{ matrix.arch }}/generic/openwrt-sdk-22.03.5-${{ matrix.arch }}-generic_gcc-11.2.0_musl.Linux-x86_64.tar.xz"
+        wget $SDK_URL -O sdk.tar.xz
+        tar -xf sdk.tar.xz
+        mv openwrt-sdk-* openwrt-sdk
+
+    - name: Copy Package to SDK
+      run: |
+        cp -r source/* openwrt-sdk/package/
+
+    - name: Build IPK Package
+      run: |
+        cd openwrt-sdk
+        make defconfig
+        make package/compile -j$(nproc)
+        mkdir -p ../output/${{ matrix.arch }}
+        find bin/packages -name '*.ipk' -exec cp {} ../output/${{ matrix.arch }} \;
+
+    - name: Upload IPK Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: openwrt-ipk-packages-${{ matrix.arch }}
+        path: output/${{ matrix.arch }}
